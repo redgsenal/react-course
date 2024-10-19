@@ -1,61 +1,30 @@
-import React, { useState } from "react";
-import { cards } from "./data";
-import Card from './components/card/card.component';
+import React, { useEffect, useState } from "react";
+import CardList from './components/card-list/card-list.component';
 
 export default function App() {
-  const [people, setPeople] = useState(cards);
+  // initial state for people list
+  const [people, setPeople] = useState([]);
+  console.log('people: ', people);
 
   const handleDelete = (id) => {
     setPeople(people.filter((person) => person.id !== id));
   };
+
+  // get list of random people
+  // fetch('https://jsonplaceholder.typicode.com/users')
+  useEffect(() => {
+    console.log('useEffect fetch callback');
+    fetch('https://randomuser.me/api/?results=10')
+      .then((response) => response.json())
+      .then((users) => setPeople(users.results));
+  }, []);
 
   // function handleDelete(id) {};
 
   return (
     <div className="container">
       <h1>List App {people.length} people</h1>
-
-      <div className="cards">
-        {/* {people.map(({ name, bio, id }) => (
-          <article key={bio}>
-            <h2>{name}</h2>
-            <p>{bio}</p>
-            <button className="danger" onClick={() => handleDelete(id)}>
-              Remove
-            </button>
-          </article>
-        ))} */}
-
-        {people.map((card, index) => {
-          return (
-            <article key={index}>
-              <h2>{card.name}</h2>
-              <p>{card.bio}</p>
-              <button className="danger" onClick={() => handleDelete(card.id)}>
-                Remove
-              </button>
-            </article>
-          );
-        })}
-
-        {/* {cards.map((card, index) => (
-          <article key={index}>
-            <h2>{card.name}</h2>
-            <p>{card.bio}</p>
-          </article>
-        ))} */}
-
-        {/* {cards.map((card, index) => {
-          const { name, bio } = card;
-
-          return (
-            <article key={index}>
-              <h2>{name}</h2>
-              <p>{bio}</p>
-            </article>
-          );
-        })} */}
-      </div>
-    </div>
+      <CardList people={people} handleDelete={handleDelete}></CardList>
+    </div >
   );
 }
