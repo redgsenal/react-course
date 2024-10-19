@@ -14,15 +14,25 @@ export default function App() {
   //   setNumber(number - 1000);
   // };
 
+  const buttonIncrementClick = () => {
+    console.log('hello there ++');
+    setNumber(number + 1);
+  };
+
+  const buttonDecrementClick = () => {
+    console.log('hello there --');
+    setNumber(number - 1);
+  };
+
   return (
     <div className="container">
       <ul>
         <li>
-          <button onClick={() => setNumber(number + 50)}>Add</button>
+          <button onClick={buttonIncrementClick}>Increment by 1</button>
         </li>
         <li>{number}</li>
         <li>
-          <button onClick={() => setNumber(number - 100)}>Subtract</button>
+          <button onClick={buttonDecrementClick}>Subtract</button>
         </li>
       </ul>
     </div>

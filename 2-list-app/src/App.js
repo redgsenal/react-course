@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { cards } from "./data";
+import Card from './components/card/card.component';
 
 export default function App() {
   const [people, setPeople] = useState(cards);
